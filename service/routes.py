@@ -62,15 +62,22 @@ def create_accounts():
 ######################################################################
 
 # ... place you code here to LIST accounts ...
-
+@app.route("/accounts", methods = ["GET"])
+def list_accounts(self):
+    app.logger.info("Request to list all Accounts")
+    acc = Account.all()
+    account_list = []
+    for a in acc:
+        account_list.append(a.deserialize())
+    return jsonify(account_list), status.HTTP_200_OK
 
 ######################################################################
 # READ AN ACCOUNT
 ######################################################################
 
 # ... place you code here to READ an account ...
-@app.route("/accounts/<int:id>", methods = "GET")
-def get_accounts(id):
+@app.route("/accounts/<int:id>", methods = ["GET"])
+def get_accounts(self, id):
     app.logger.info(f"Reading an account with id: {id}")    
     resp = Account.find(id)
     if resp == None:
