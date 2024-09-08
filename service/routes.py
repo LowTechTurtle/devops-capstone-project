@@ -92,7 +92,7 @@ def get_accounts(self, id):
 
 
 # ... place you code here to UPDATE an account ...
-@app.route("accounts/<int:id>", methods=["POST"])
+@app.route("/accounts/<int:id>", methods=["POST"])
 def update_account(self, id):
     acc = Account.get(id)
     if acc is None:
