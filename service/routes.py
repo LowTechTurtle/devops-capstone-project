@@ -61,8 +61,9 @@ def create_accounts():
 # LIST ALL ACCOUNTS
 ######################################################################
 
+
 # ... place you code here to LIST accounts ...
-@app.route("/accounts", methods = ["GET"])
+@app.route("/accounts", methods=["GET"])
 def list_accounts(self):
     app.logger.info("Request to list all Accounts")
     acc = Account.all()
@@ -75,12 +76,13 @@ def list_accounts(self):
 # READ AN ACCOUNT
 ######################################################################
 
+
 # ... place you code here to READ an account ...
-@app.route("/accounts/<int:id>", methods = ["GET"])
+@app.route("/accounts/<int:id>", methods=["GET"])
 def get_accounts(self, id):
-    app.logger.info(f"Reading an account with id: {id}")    
+    app.logger.info(f"Reading an account with id: {id}")
     resp = Account.find(id)
-    if resp == None:
+    if resp is None:
         abort(status.HTTP_404_NOT_FOUND, f"Account with id {id} not found")
     return resp.serialize(), status.HTTP_200_OK
 
@@ -88,11 +90,12 @@ def get_accounts(self, id):
 # UPDATE AN EXISTING ACCOUNT
 ######################################################################
 
+
 # ... place you code here to UPDATE an account ...
-@app.route("accounts/<int:id>", methods = ["POST"])
+@app.route("accounts/<int:id>", methods=["POST"])
 def update_account(self, id):
     acc = Account.get(id)
-    if acc == None:
+    if acc is None:
         abort(status.HTTP_404_NOT_FOUND, f"Account with id [{id}] could not be found.")
 
     data = request.get_json()
@@ -104,14 +107,14 @@ def update_account(self, id):
 # DELETE AN ACCOUNT
 ######################################################################
 
+
 @app.route("/accounts/<int:account_id>", methods=["DELETE"])
 def delete_accounts(account_id):
-        
-        app.logger.info("Request to delete an Account with id: %s", account_id)
-        account = Account.find(account_id)
-        if account:
-            account.delete()
-        return "", status.HTTP_204_NO_CONTENT
+    app.logger.info("Request to delete an Account with id: %s", account_id)
+    account = Account.find(account_id)
+    if account:
+        account.delete()
+    return "", status.HTTP_204_NO_CONTENT
 
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
