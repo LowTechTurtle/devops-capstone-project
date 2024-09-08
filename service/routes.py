@@ -82,7 +82,6 @@ def get_accounts(self, id):
     resp = Account.find(id)
     if resp == None:
         abort(status.HTTP_404_NOT_FOUND, f"Account with id {id} not found")
-    self.assertEqual(acc.id, id)
     return account.serialize(), status.HTTP_200_OK
 
 ######################################################################
@@ -94,13 +93,13 @@ def get_accounts(self, id):
 def update_account(self, id):
     acc = Account.get(id)
     if acc == None:
-        abort(status.HTTP_404_NOT_FOUND, f"Account with id [{account_id}] could not be found.")
+        abort(status.HTTP_404_NOT_FOUND, f"Account with id [{id}] could not be found.")
 
     data = request.get_json()
     acc.deserialize(data)
     acc.update()
 
-    return account.serialize(), status.HTTP_200_OK
+    return acc.serialize(), status.HTTP_200_OK
 ######################################################################
 # DELETE AN ACCOUNT
 ######################################################################
