@@ -140,4 +140,22 @@ class TestAccountService(TestCase):
         data = resp.get_json()
         self.assertEqual(len(accounts), len(data))
 
+    def test_update_account(self):
+        account = self._create_accounts(1)[0]
+        resp = self.cilent.post(f"{BASE_URL}", json=account.serialize(), content_type="application/json")
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        
+        new_acc = resp.get_json()
+        new_acc["name"] = "banana"
+        resp = self.client.put(f"{BASE_URL}/{new_acc["id"]}", json=new_acc)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(resp.get_json()["name"], "banana")
     
+    def test_delete_account(self):
+        account = self._create_accounts(1)[0]
+        resp = self.client.delete(f"{BASE_URL}/{account.id}")
+        self.assertEqual(resp.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_method_not_allowed(self):
+        resp = self.client.delete(BASE_URL)
+        self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
