@@ -82,7 +82,7 @@ def get_accounts(self, id):
     resp = Account.find(id)
     if resp == None:
         abort(status.HTTP_404_NOT_FOUND, f"Account with id {id} not found")
-    return account.serialize(), status.HTTP_200_OK
+    return resp.serialize(), status.HTTP_200_OK
 
 ######################################################################
 # UPDATE AN EXISTING ACCOUNT
